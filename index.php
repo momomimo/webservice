@@ -13,7 +13,7 @@
 </head>
 <body>
     
-<?php echo $text;?><br>
+<h1><?php echo $text;?><br></h1>
 Nama    : <?php echo $nama;?><br>
 NIM     : <?php echo $nim;?>
 </p>
