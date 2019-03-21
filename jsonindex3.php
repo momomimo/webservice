@@ -37,29 +37,27 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">No</th>
-                        <th scope="col">Nama</th>
                         <th scope="col">NIK</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Password</th>
-                        <th scope="col">No Telpon</th>
-                        <th scope="col">Role</th>
+                        <th scope="col">Nama</th>
+                        <th scope="col">KK</th>
+                        <th scope="col">Tempat Lahir</th>
+                        <th scope="col">Tanggal Lahir</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
 
-                    $q = "SELECT * FROM tb_user";
+                    $q = "SELECT k.id as no_id,k.no_kk,p.nama,p.nik,p.tempatlahir,p.tanggallahir FROM tb_keluarga as k,tb_penduduk as p WHERE p.id_kk = k.nik_kepala";
                     $hasil = mysqli_query($koneksi, $q);
 
                     foreach ($hasil as $data) { ?>
                     <tr>
-                        <th scope="row"><?= $data['id_user']; ?></th>
+                        <th scope="row"><?= $data['no_id']; ?></th>
+                        <td><?= $data['no_kk']; ?></td>
                         <td><?= $data['nama']; ?></td>
                         <td><?= $data['nik']; ?></td>
-                        <td><?= $data['nama_user']; ?></td>
-                        <td><?= $data['password']; ?></td>
-                        <td><?= $data['no_telepon']; ?></td>
-                        <td><?= $data['role']; ?></td>
+                        <td><?= $data['tempatlahir']; ?></td>
+                        <td><?= $data['tanggallahir']; ?></td>
                     </tr>
                     <?php
 
@@ -72,20 +70,19 @@
             <h3>Menampilkan Data Mysql Menggunakan JSON :</h3>
             <?php
 
-            $q = "SELECT * FROM tb_user";
+            $q = "SELECT k.id as no_id,k.no_kk,p.nama,p.nik,p.tempatlahir,p.tanggallahir FROM tb_keluarga as k,tb_penduduk as p WHERE p.id_kk = k.nik_kepala";
             $hasil = mysqli_query($koneksi, $q);
 
             if (mysqli_num_rows($hasil) > 0) {
                 $data = array();
                 $data['json'] = array();
                 while ($x = mysqli_fetch_array($hasil)) {
-                    $d['id_user'] = $x["id_user"];
-                    $d['nik'] = $x["nik"];
+                    $d['no_id'] = $x["no_id"];
+                    $d['no_kk'] = $x["no_kk"];
                     $d['nama'] = $x["nama"];
-                    $d['nama_user'] = $x["nama_user"];
-                    $d['password'] = $x["password"];
-                    $d['role'] = $x["role"];
-                    $d['no_telepon'] = $x["no_telepon"];
+                    $d['nik'] = $x["nik"];
+                    $d['tempatlahir'] = $x["tempatlahir"];
+                    $d['tanggallahir'] = $x["tanggallahir"];
                     array_push($data['json'], $d);
                 }
                 echo json_encode($data);
